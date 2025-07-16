@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Agradecimento</title>
   <style>
     body {
@@ -52,11 +52,11 @@
 </head>
 <body>
 
-  <img id="imagem" src="momo.jpg" alt="momo">
+  <img id="imagem" src="momo.jpg" alt="momo" />
   <div id="mensagem">obrigado por tudo galera, amo vocês</div>
-  <button id="botao">Mensagem fofa para amigos (aumente o volume)</button>
+  <button id="botao">Mensagem linda para amigos, aumente o volume</button>
 
-  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" autoplay></audio>
+  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
 
   <script>
     const botao = document.getElementById('botao');
@@ -65,18 +65,22 @@
     const imagem = document.getElementById('imagem');
     const body = document.body;
 
-    // Tocar o som mesmo se o navegador bloquear autoplay
+    // Tentativa de autoplay ao clicar na tela (alguns navegadores bloqueiam autoplay)
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
 
     botao.addEventListener('click', () => {
+      alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
+
       mensagem.style.display = 'block';
       imagem.style.display = 'block';
       botao.style.display = 'none';
+
+      audio.volume = 1.0; // volume máximo no player
       audio.play();
 
-      // Efeito de piscada com cores negativas
+      // efeito piscada com cores negativas
       let flashes = 0;
       const flashInterval = setInterval(() => {
         body.style.filter = (flashes % 2 === 0) ? 'invert(1) contrast(2) brightness(2)' : 'none';
@@ -90,4 +94,4 @@
   </script>
 
 </body>
-</html>
+  </html>
