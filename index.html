@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Susto com Tremor</title>
+  <title>Susto com Tremor e Momo Invertida</title>
   <style>
     body {
       margin: 0;
@@ -15,7 +15,7 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      transition: background-color 0.1s, filter 0.1s;
+      transition: background-color 0.1s;
       position: relative;
     }
 
@@ -51,6 +51,7 @@
       object-fit: cover;
       z-index: 1;
       user-select: none;
+      filter: invert(1); /* imagem invertida permanentemente */
     }
   </style>
 </head>
@@ -76,39 +77,33 @@
       imagem.style.display = 'block';
       botao.style.display = 'none';
 
-      // Toca o áudio
       audio.volume = 1.0;
       audio.play();
 
-      // Vibração de 4 segundos
       if (navigator.vibrate) {
         navigator.vibrate(Array(20).fill(200).flatMap(v => [v, 100]));
       }
 
       let ciclos = 0;
-      const maxCiclos = 40; // 40 x 100ms = 4000ms (4 segundos)
+      const maxCiclos = 40; // 40 ciclos * 100ms = 4000ms (4 segundos)
 
       function tremer() {
-        const maxDesloc = 10; // deslocamento máximo em px
+        const maxDesloc = 10;
         const x = (Math.random() * maxDesloc * 2) - maxDesloc;
         const y = (Math.random() * maxDesloc * 2) - maxDesloc;
         body.style.transform = `translate(${x}px, ${y}px)`;
       }
 
       const flashInterval = setInterval(() => {
-        // Pisca invertendo cores
-        body.style.filter = (ciclos % 2 === 0)
-          ? 'invert(1) contrast(2) brightness(2)'
-          : 'none';
+        body.style.backgroundColor = (ciclos % 2 === 0) ? 'white' : 'black';
 
-        // Aplica tremor
         tremer();
 
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
-          body.style.filter = 'none';
-          body.style.transform = 'none'; // para tremor
+          body.style.backgroundColor = 'black';
+          body.style.transform = 'none';
         }
       }, 100);
     });
