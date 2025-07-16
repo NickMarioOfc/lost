@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>...</title>
+  <title>Susto com Tremor</title>
   <style>
     body {
       margin: 0;
@@ -15,7 +15,8 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      transition: filter 0.2s;
+      transition: background-color 0.1s, filter 0.1s;
+      position: relative;
     }
 
     #mensagem {
@@ -24,6 +25,7 @@
       text-align: center;
       padding: 20px;
       z-index: 2;
+      user-select: none;
     }
 
     #botao {
@@ -36,6 +38,7 @@
       cursor: pointer;
       margin-top: 30px;
       z-index: 2;
+      user-select: none;
     }
 
     #imagem {
@@ -47,6 +50,7 @@
       height: 100vh;
       object-fit: cover;
       z-index: 1;
+      user-select: none;
     }
   </style>
 </head>
@@ -65,43 +69,50 @@
     const imagem = document.getElementById('imagem');
     const body = document.body;
 
-    // Tentativa de autoplay ao clicar na tela (alguns navegadores bloqueiam autoplay)
-    window.addEventListener("click", () => {
-      audio.play().catch(() => {});
-    });
-
     botao.addEventListener('click', () => {
-      alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
-
-      // Vibração por 4 segundos (4000ms)
-      if (navigator.vibrate) {
-        navigator.vibrate([200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100]);
-      }
+      alert("⚠️ Aumente o volume do seu dispositivo para melhor experiência!");
 
       mensagem.style.display = 'block';
       imagem.style.display = 'block';
       botao.style.display = 'none';
 
+      // Toca o áudio
       audio.volume = 1.0;
       audio.play();
 
-      // Tela piscando por 4 segundos com intervalo de 100ms
+      // Vibração de 4 segundos
+      if (navigator.vibrate) {
+        navigator.vibrate(Array(20).fill(200).flatMap(v => [v, 100]));
+      }
+
       let ciclos = 0;
       const maxCiclos = 40; // 40 x 100ms = 4000ms (4 segundos)
 
+      function tremer() {
+        const maxDesloc = 10; // deslocamento máximo em px
+        const x = (Math.random() * maxDesloc * 2) - maxDesloc;
+        const y = (Math.random() * maxDesloc * 2) - maxDesloc;
+        body.style.transform = `translate(${x}px, ${y}px)`;
+      }
+
       const flashInterval = setInterval(() => {
+        // Pisca invertendo cores
         body.style.filter = (ciclos % 2 === 0)
           ? 'invert(1) contrast(2) brightness(2)'
           : 'none';
+
+        // Aplica tremor
+        tremer();
 
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
           body.style.filter = 'none';
+          body.style.transform = 'none'; // para tremor
         }
-      }, 100); // Pisca a cada 100ms
+      }, 100);
     });
   </script>
 
 </body>
-    </html>
+</html>
