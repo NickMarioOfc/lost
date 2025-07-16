@@ -23,7 +23,8 @@
       font-size: 36px;
       text-align: center;
       padding: 20px;
-      z-index: 2;
+      z-index: 3;
+      position: relative;
     }
 
     #botao {
@@ -53,7 +54,7 @@
 <body>
 
   <img id="imagem" src="momo.jpg" alt="momo" />
-  <div id="mensagem">Você que está vendo é muito especial pra mim,te amo ❤️</div>
+  <div id="mensagem">Você que está vendo é muito especial pra mim, te amo ❤️</div>
   <button id="botao">Mensagem linda para amigos</button>
 
   <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
@@ -65,7 +66,7 @@
     const imagem = document.getElementById('imagem');
     const body = document.body;
 
-    // Tentativa de autoplay ao clicar na tela (alguns navegadores bloqueiam autoplay)
+    // Tentativa de autoplay ao clicar na tela
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
@@ -73,28 +74,29 @@
     botao.addEventListener('click', () => {
       alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
 
-      // Vibração do susto 😱
+      // Vibração intensa por 4 segundos
       if (navigator.vibrate) {
-        navigator.vibrate([300, 100, 300, 100, 300]);
+        navigator.vibrate(Array(40).fill([100, 0]).flat());
       }
 
-      mensagem.style.display = 'block';
       imagem.style.display = 'block';
+      mensagem.style.display = 'block'; // <- mostrar junto com a imagem
       botao.style.display = 'none';
-
-      audio.volume = 1.0; // volume máximo no player
+      audio.volume = 1.0;
       audio.play();
 
-      // efeito piscada com cores negativas
+      // Piscando por 4 segundos
       let flashes = 0;
       const flashInterval = setInterval(() => {
-        body.style.filter = (flashes % 2 === 0) ? 'invert(1) contrast(2) brightness(2)' : 'none';
+        body.style.filter = (flashes % 2 === 0)
+          ? 'invert(1) contrast(2) brightness(2)'
+          : 'none';
         flashes++;
-        if (flashes > 20) {
+        if (flashes > 80) {
           clearInterval(flashInterval);
           body.style.filter = 'none';
         }
-      }, 50); // piscando a cada 50ms
+      }, 50);
     });
   </script>
 
