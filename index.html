@@ -23,8 +23,7 @@
       font-size: 36px;
       text-align: center;
       padding: 20px;
-      z-index: 3;
-      position: relative;
+      z-index: 2;
     }
 
     #botao {
@@ -74,34 +73,35 @@
     botao.addEventListener('click', () => {
       alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
 
-      // Vibração intensa por 4 segundos (400ms ligado, 100ms pausa, repetido 8 vezes)
+      // Vibração por 4 segundos (4000ms)
       if (navigator.vibrate) {
-        navigator.vibrate([400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100]);
+        navigator.vibrate([200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100, 200, 100]);
       }
 
-      imagem.style.display = 'block';
       mensagem.style.display = 'block';
+      imagem.style.display = 'block';
       botao.style.display = 'none';
+
       audio.volume = 1.0;
       audio.play();
 
-      // Piscar a tela por 4 segundos (40 ciclos, cada ciclo = invert + normal, cada passo 50ms)
+      // Tela piscando por 4 segundos com intervalo de 100ms
       let ciclos = 0;
-      const maxCiclos = 40; // 40 ciclos × 50ms = 2000ms × 2 passos = 4000ms
+      const maxCiclos = 40; // 40 x 100ms = 4000ms (4 segundos)
+
       const flashInterval = setInterval(() => {
-        if (ciclos % 2 === 0) {
-          body.style.filter = 'invert(1) contrast(2) brightness(2)';
-        } else {
-          body.style.filter = 'none';
-        }
+        body.style.filter = (ciclos % 2 === 0)
+          ? 'invert(1) contrast(2) brightness(2)'
+          : 'none';
+
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
           body.style.filter = 'none';
         }
-      }, 50);
+      }, 100); // Pisca a cada 100ms
     });
   </script>
 
 </body>
-</html>
+    </html>
