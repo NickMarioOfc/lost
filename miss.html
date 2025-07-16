@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>...</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #mensagem {
+      display: none;
+      font-size: 36px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #botao {
+      padding: 30px 50px;
+      font-size: 28px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mensagem">--- -... .-. .. --. .- -.. --- / .--. --- .-. / - ..- -.. --- / --. .- .-.. . .-. .- / .- -- --- / ...- --- -.-. ... / -.. . / -.-. --- .-. .- --- ..--- ----- -..-. ----- --... -..-. ..--- ----- ..--- .....</div>
+  <button id="botao">...</button>
+
+  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" autoplay></audio>
+
+  <script>
+    const botao = document.getElementById('botao');
+    const mensagem = document.getElementById('mensagem');
+    const audio = document.getElementById('audio');
+
+    // Tocar o som mesmo se o navegador bloquear autoplay
+    window.addEventListener("click", () => {
+      audio.play().catch(() => {});
+    });
+
+    botao.addEventListener('click', () => {
+      mensagem.style.display = 'block';
+      botao.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
