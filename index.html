@@ -66,7 +66,7 @@
     const imagem = document.getElementById('imagem');
     const body = document.body;
 
-    // Tentativa de autoplay ao clicar na tela
+    // Tentativa de autoplay ao clicar na tela (alguns navegadores bloqueiam autoplay)
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
@@ -74,25 +74,28 @@
     botao.addEventListener('click', () => {
       alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
 
-      // Vibração intensa por 4 segundos
+      // Vibração intensa por 4 segundos (400ms ligado, 100ms pausa, repetido 8 vezes)
       if (navigator.vibrate) {
-        navigator.vibrate(Array(40).fill([100, 0]).flat());
+        navigator.vibrate([400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100, 400, 100]);
       }
 
       imagem.style.display = 'block';
-      mensagem.style.display = 'block'; // <- mostrar junto com a imagem
+      mensagem.style.display = 'block';
       botao.style.display = 'none';
       audio.volume = 1.0;
       audio.play();
 
-      // Piscando por 4 segundos
-      let flashes = 0;
+      // Piscar a tela por 4 segundos (40 ciclos, cada ciclo = invert + normal, cada passo 50ms)
+      let ciclos = 0;
+      const maxCiclos = 40; // 40 ciclos × 50ms = 2000ms × 2 passos = 4000ms
       const flashInterval = setInterval(() => {
-        body.style.filter = (flashes % 2 === 0)
-          ? 'invert(1) contrast(2) brightness(2)'
-          : 'none';
-        flashes++;
-        if (flashes > 80) {
+        if (ciclos % 2 === 0) {
+          body.style.filter = 'invert(1) contrast(2) brightness(2)';
+        } else {
+          body.style.filter = 'none';
+        }
+        ciclos++;
+        if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
           body.style.filter = 'none';
         }
