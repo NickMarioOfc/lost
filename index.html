@@ -73,6 +73,11 @@
     botao.addEventListener('click', () => {
       alert("⚠️ Por favor, aumente o volume do seu dispositivo para melhor experiência!");
 
+      // Vibração do susto 😱
+      if (navigator.vibrate) {
+        navigator.vibrate([300, 100, 300, 100, 300]);
+      }
+
       mensagem.style.display = 'block';
       imagem.style.display = 'block';
       botao.style.display = 'none';
@@ -94,4 +99,4 @@
   </script>
 
 </body>
-  </html>
+</html>
