@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Mande isso para seus amigos❤️✨</title>
+  <title>Susto com Tela Piscando</title>
   <style>
     body {
       margin: 0;
@@ -16,7 +16,7 @@
       height: 100vh;
       overflow: hidden;
       position: relative;
-      transition: filter 0.15s;
+      transition: background-color 0.15s;
     }
 
     #mensagem {
@@ -51,7 +51,6 @@
       object-fit: cover;
       z-index: 1;
       user-select: none;
-      /* Sem filtro para deixar a imagem natural e ser afetada pelo filtro do body */
     }
   </style>
 </head>
@@ -95,5 +94,19 @@
       }
 
       const flashInterval = setInterval(() => {
-        // Alterna entre filtro invertido e normal
-        if (ciclos % 2 ===
+        body.style.backgroundColor = (ciclos % 2 === 0) ? 'white' : 'black';
+
+        tremer();
+
+        ciclos++;
+        if (ciclos >= maxCiclos) {
+          clearInterval(flashInterval);
+          body.style.backgroundColor = 'black';
+          body.style.transform = 'none';
+        }
+      }, 150);
+    });
+  </script>
+
+</body>
+</html>
