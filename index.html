@@ -15,8 +15,8 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      transition: background-color 0.15s;
       position: relative;
+      transition: filter 0.15s;
     }
 
     #mensagem {
@@ -51,7 +51,7 @@
       object-fit: cover;
       z-index: 1;
       user-select: none;
-      filter: invert(1);
+      /* Sem filtro para deixar a imagem natural e ser afetada pelo filtro do body */
     }
   </style>
 </head>
@@ -95,19 +95,5 @@
       }
 
       const flashInterval = setInterval(() => {
-        body.style.backgroundColor = (ciclos % 2 === 0) ? 'white' : 'black';
-
-        tremer();
-
-        ciclos++;
-        if (ciclos >= maxCiclos) {
-          clearInterval(flashInterval);
-          body.style.backgroundColor = 'black';
-          body.style.transform = 'none';
-        }
-      }, 150);
-    });
-  </script>
-
-</body>
-</html>
+        // Alterna entre filtro invertido e normal
+        if (ciclos % 2 ===
