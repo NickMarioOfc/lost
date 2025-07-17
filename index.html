@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -15,6 +15,7 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
+      transition: background-color 0.1s ease;
     }
 
     #mensagem {
@@ -22,6 +23,8 @@
       font-size: 36px;
       text-align: center;
       padding: 20px;
+      color: white;
+      transition: filter 0.1s ease;
     }
 
     #botao {
@@ -65,6 +68,7 @@
     const audio = document.getElementById('audio');
     const body = document.body;
 
+    // Toca o áudio no clique, caso autoplay falhe
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
@@ -79,16 +83,24 @@
       const maxCiclos = 27; // 27 x 150ms ≈ 4 segundos
 
       const flashInterval = setInterval(() => {
-        // Faz a imagem piscar em branco
         if (ciclos % 2 === 0) {
-          imagem.style.filter = 'brightness(10)';
+          body.style.backgroundColor = 'white';
+          body.style.color = 'black';
+          mensagem.style.color = 'black';
+          imagem.style.filter = 'brightness(0.1)';
         } else {
-          imagem.style.filter = 'none';
+          body.style.backgroundColor = 'black';
+          body.style.color = 'white';
+          mensagem.style.color = 'white';
+          imagem.style.filter = 'brightness(1)';
         }
 
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
+          body.style.backgroundColor = 'black';
+          body.style.color = 'white';
+          mensagem.style.color = 'white';
           imagem.style.filter = 'none';
         }
       }, 150);
