@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Agradecimento</title>
+  <title>Mensagem Linda</title>
   <style>
     body {
       margin: 0;
@@ -22,7 +22,6 @@
       font-size: 36px;
       text-align: center;
       padding: 20px;
-      z-index: 2;
     }
 
     #botao {
@@ -34,69 +33,63 @@
       border-radius: 12px;
       cursor: pointer;
       margin-top: 30px;
-      z-index: 2;
     }
 
     #imagem {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: 1;
+      max-width: 90%;
+      max-height: 80vh;
+      transition: filter 0.1s ease;
     }
 
-    .flash {
-      opacity: 0;
+    #aviso {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: yellow;
     }
   </style>
 </head>
 <body>
 
-  <img id="imagem" src="momo.jpg" alt="momo" />
-  <div id="mensagem">Você que está lendo é muito especial, te amo ❤️</div>
+  <div id="aviso">⚠️ Aumente o volume do dispositivo para uma melhor experiência!</div>
+  <div id="mensagem">você que está lendo é muito especial, te amo ❤️</div>
+  <img id="imagem" src="momo.png" alt="Susto">
   <button id="botao">Mensagem linda para amigos</button>
 
-  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
+  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3"></audio>
 
   <script>
     const botao = document.getElementById('botao');
     const mensagem = document.getElementById('mensagem');
-    const audio = document.getElementById('audio');
     const imagem = document.getElementById('imagem');
+    const audio = document.getElementById('audio');
+    const body = document.body;
 
-    // Autoplay tentativa
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
 
     botao.addEventListener('click', () => {
-      alert("⚠️ Por favor, aumente o volume do seu dispositivo para uma melhor experiência!");
-
-      // Vibrar por 4 segundos
-      if (navigator.vibrate) {
-        navigator.vibrate([500, 100, 500, 100, 500, 100, 500]);
-      }
-
-      mensagem.style.display = 'block';
+      audio.play();
       imagem.style.display = 'block';
+      mensagem.style.display = 'block';
       botao.style.display = 'none';
 
-      audio.volume = 1.0;
-      audio.play();
-
-      // Piscar a imagem por 4 segundos (150ms cada flash)
       let ciclos = 0;
       const maxCiclos = 27; // 27 x 150ms ≈ 4 segundos
 
       const flashInterval = setInterval(() => {
-        imagem.classList.toggle('flash');
+        // Faz a imagem piscar em branco
+        if (ciclos % 2 === 0) {
+          imagem.style.filter = 'brightness(10)';
+        } else {
+          imagem.style.filter = 'none';
+        }
+
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
-          imagem.classList.remove('flash');
+          imagem.style.filter = 'none';
         }
       }, 150);
     });
