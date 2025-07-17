@@ -85,7 +85,7 @@
       const flashInterval = setInterval(() => {
         if (ciclos % 2 === 0) {
           body.style.backgroundColor = 'white';
-          body.style.color = 'black';
+          body.style.color = 'white';
           mensagem.style.color = 'black';
           imagem.style.filter = 'brightness(0.1)';
         } else {
@@ -98,7 +98,7 @@
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
-          body.style.backgroundColor = 'black';
+          body.style.backgroundColor = 'white';
           body.style.color = 'white';
           mensagem.style.color = 'white';
           imagem.style.filter = 'none';
