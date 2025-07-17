@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Susto com Tela Piscando</title>
+  <meta charset="UTF-8">
+  <title>Mensagem Linda</title>
   <style>
     body {
       margin: 0;
@@ -15,7 +15,6 @@
       flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      position: relative;
       transition: background-color 0.15s;
     }
 
@@ -25,7 +24,6 @@
       text-align: center;
       padding: 20px;
       z-index: 2;
-      user-select: none;
     }
 
     #botao {
@@ -38,26 +36,12 @@
       cursor: pointer;
       margin-top: 30px;
       z-index: 2;
-      user-select: none;
-    }
-
-    #imagem {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: 1;
-      user-select: none;
     }
   </style>
 </head>
 <body>
 
-  <img id="imagem" src="momo.jpg" alt="momo" />
-  <div id="mensagem">Você que está vendo é muito especial pra mim, te amo ❤️</div>
+  <div id="mensagem">Você que está lendo é muito especial, te amo ❤️</div>
   <button id="botao">Mensagem linda para amigos</button>
 
   <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
@@ -66,35 +50,42 @@
     const botao = document.getElementById('botao');
     const mensagem = document.getElementById('mensagem');
     const audio = document.getElementById('audio');
-    const imagem = document.getElementById('imagem');
     const body = document.body;
 
+    // Garante que o som pode ser reproduzido
+    window.addEventListener("click", () => {
+      audio.play().catch(() => {});
+    });
+
     botao.addEventListener('click', () => {
-      alert("⚠️ Aumente o volume do seu dispositivo para melhor experiência!");
+      alert("⚠️ Aumente o volume do dispositivo para uma melhor experiência!");
 
       mensagem.style.display = 'block';
-      imagem.style.display = 'block';
       botao.style.display = 'none';
 
+      // Iniciar áudio
       audio.volume = 1.0;
       audio.play();
 
+      // Vibrar
       if (navigator.vibrate) {
         navigator.vibrate(Array(20).fill(200).flatMap(v => [v, 100]));
       }
 
+      // Tremor e luz piscando
       let ciclos = 0;
-      const maxCiclos = 27; // 27 ciclos * 150ms = 4050ms (~4 segundos)
+      const maxCiclos = 27; // 27 * 150ms = 4 segundos
 
       function tremer() {
-        const maxDesloc = 10;
-        const x = (Math.random() * maxDesloc * 2) - maxDesloc;
-        const y = (Math.random() * maxDesloc * 2) - maxDesloc;
+        const x = (Math.random() * 20) - 10;
+        const y = (Math.random() * 20) - 10;
         body.style.transform = `translate(${x}px, ${y}px)`;
       }
 
       const flashInterval = setInterval(() => {
+        // Pisca branco/preto
         body.style.backgroundColor = (ciclos % 2 === 0) ? 'white' : 'black';
+        body.style.color = (ciclos % 2 === 0) ? 'black' : 'white';
 
         tremer();
 
@@ -102,9 +93,10 @@
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
           body.style.backgroundColor = 'black';
+          body.style.color = 'white';
           body.style.transform = 'none';
         }
-      }, 150);
+      }, 150); // 150ms piscando
     });
   </script>
 
