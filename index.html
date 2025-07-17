@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Mensagem Linda</title>
+  <meta charset="UTF-8" />
+  <title>Mensagem com Susto</title>
   <style>
     body {
       margin: 0;
@@ -16,6 +16,7 @@
       height: 100vh;
       overflow: hidden;
       transition: background-color 0.1s ease;
+      position: relative;
     }
 
     #mensagem {
@@ -24,7 +25,9 @@
       text-align: center;
       padding: 20px;
       color: white;
-      transition: filter 0.1s ease;
+      transition: color 0.1s ease;
+      z-index: 10;
+      user-select: none;
     }
 
     #botao {
@@ -36,6 +39,8 @@
       border-radius: 12px;
       cursor: pointer;
       margin-top: 30px;
+      z-index: 10;
+      user-select: none;
     }
 
     #imagem {
@@ -43,20 +48,30 @@
       max-width: 90%;
       max-height: 80vh;
       transition: filter 0.1s ease;
+      position: relative;
+      z-index: 5;
+      user-select: none;
     }
 
-    #aviso {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: yellow;
+    /* Classe para tremer a tela */
+    @keyframes tremor {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-5px, 5px); }
+      40% { transform: translate(5px, -5px); }
+      60% { transform: translate(-5px, -5px); }
+      80% { transform: translate(5px, 5px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .tremendo {
+      animation: tremor 0.15s infinite;
     }
   </style>
 </head>
 <body>
 
-  <div id="aviso">⚠️ Aumente o volume do dispositivo para uma melhor experiência!</div>
-  <div id="mensagem">você que está lendo é muito especial, te amo ❤️</div>
-  <img id="imagem" src="momo.png" alt="Susto">
+  <div id="mensagem">Você que está lendo é muito especial, te amo ❤️</div>
+  <img id="imagem" src="momo.png" alt="Susto" />
   <button id="botao">Mensagem linda para amigos</button>
 
   <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3"></audio>
@@ -68,40 +83,54 @@
     const audio = document.getElementById('audio');
     const body = document.body;
 
-    // Toca o áudio no clique, caso autoplay falhe
+    // Tocar áudio no clique caso autoplay falhe
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
 
     botao.addEventListener('click', () => {
-      audio.play();
-      imagem.style.display = 'block';
+      alert("⚠️ Por favor, aumente o volume do seu dispositivo para uma melhor experiência!");
+
+      // Exibir elementos
       mensagem.style.display = 'block';
+      imagem.style.display = 'block';
       botao.style.display = 'none';
 
+      // Tocar áudio
+      audio.volume = 1.0;
+      audio.play();
+
+      // Vibração forte por 4 segundos
+      if (navigator.vibrate) {
+        navigator.vibrate(4000);
+      }
+
+      // Adicionar classe que faz a tela tremer
+      body.classList.add('tremendo');
+
       let ciclos = 0;
-      const maxCiclos = 27; // 27 x 150ms ≈ 4 segundos
+      const maxCiclos = 27; // 27 x 150ms = ~4050ms (4 segundos)
 
       const flashInterval = setInterval(() => {
         if (ciclos % 2 === 0) {
+          // Fundo branco, texto preto, imagem branquíssima
           body.style.backgroundColor = 'white';
-          body.style.color = 'white';
           mensagem.style.color = 'black';
-          imagem.style.filter = 'brightness(0.1)';
+          imagem.style.filter = 'brightness(8)';
         } else {
+          // Fundo preto, texto branco, imagem normal
           body.style.backgroundColor = 'black';
-          body.style.color = 'black';
-          mensagem.style.color = 'black';
+          mensagem.style.color = 'white';
           imagem.style.filter = 'brightness(1)';
         }
-
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
+          // Resetar estilos e parar o tremor
           body.style.backgroundColor = 'black';
-          body.style.color = 'black';
-          mensagem.style.color = 'black';
+          mensagem.style.color = 'white';
           imagem.style.filter = 'none';
+          body.classList.remove('tremendo');
         }
       }, 150);
     });
