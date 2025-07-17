@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Mensagem linda</title>
+  <meta charset="UTF-8" />
+  <title>Agradecimento</title>
   <style>
     body {
       margin: 0;
@@ -22,6 +22,7 @@
       font-size: 36px;
       text-align: center;
       padding: 20px;
+      margin-top: 20px;
     }
 
     #botao {
@@ -34,28 +35,44 @@
       cursor: pointer;
       margin-top: 30px;
     }
+
+    #imagem {
+      display: none;
+      max-width: 90%;
+      max-height: 80vh;
+      margin-top: 20px;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
 
-  <div id="mensagem">você que está lendo é muito especial, te amo❤️</div>
-  <button id="botao">Clique aqui</button>
+  <div id="mensagem">Obrigado por tudo galera, amo vocês ❤️</div>
+  <img id="imagem" src="momo.png" alt="Momo" />
+  <button id="botao">Mensagem linda para amigos</button>
 
-  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" autoplay></audio>
+  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
 
   <script>
     const botao = document.getElementById('botao');
     const mensagem = document.getElementById('mensagem');
+    const imagem = document.getElementById('imagem');
     const audio = document.getElementById('audio');
 
-    // Tocar o som mesmo se o navegador bloquear autoplay
+    // Tocar áudio no clique caso autoplay falhe
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
     });
 
     botao.addEventListener('click', () => {
+      alert("⚠️ Por favor, aumente o volume do seu dispositivo para uma melhor experiência!");
+
       mensagem.style.display = 'block';
+      imagem.style.display = 'block';
       botao.style.display = 'none';
+
+      audio.volume = 1.0;
+      audio.play();
     });
   </script>
 
