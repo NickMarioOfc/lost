@@ -1,142 +1,130 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Agradecimento com Susto</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-
-    #imagem {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: 1;
-      user-select: none;
-      display: none;
-      transition: filter 0.15s ease;
-    }
-
-    #container {
-      position: relative;
-      z-index: 10;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    #mensagem {
-      display: none;
-      font-size: 36px;
-      margin-top: 20px;
-      user-select: none;
-      transition: color 0.15s ease;
-    }
-
-    #botao {
-      padding: 30px 50px;
-      font-size: 28px;
-      background-color: red;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 30px;
-      user-select: none;
-    }
-
-    /* Animação para tremer a tela */
-    @keyframes tremor {
-      0% { transform: translate(0, 0); }
-      20% { transform: translate(-5px, 5px); }
-      40% { transform: translate(5px, -5px); }
-      60% { transform: translate(-5px, -5px); }
-      80% { transform: translate(5px, 5px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    .tremendo {
-      animation: tremor 0.15s infinite;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mensagem com Susto</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    overflow: hidden;
+    background: black;
+    font-family: Arial, sans-serif;
+  }
+  #imagem {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    z-index: 1;
+    display: none;
+    user-select: none;
+    pointer-events: none;
+  }
+  #container {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    color: white;
+  }
+  #mensagem {
+    display: none;
+    font-size: 2.5rem;
+    margin-top: 20px;
+    user-select: none;
+  }
+  #botao {
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 30px;
+    user-select: none;
+  }
+  @keyframes tremor {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, -5px); }
+    60% { transform: translate(-5px, -5px); }
+    80% { transform: translate(5px, 5px); }
+    100% { transform: translate(0, 0); }
+  }
+  .tremendo {
+    animation: tremor 0.15s infinite;
+  }
+</style>
 </head>
 <body>
 
-  <img id="imagem" src="momo.jpg" alt="Momo" />
-  
-  <div id="container">
-    <div id="mensagem">Obrigado por tudo galera, amo vocês ❤️</div>
-    <button id="botao">Mensagem linda para amigos</button>
-  </div>
+<img id="imagem" src="momo.jpg" alt="Momo" />
 
-  <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
+<div id="container">
+  <div id="mensagem">Você que está lendo é muito especial, te amo ❤️</div>
+  <button id="botao">Mensagem linda para amigos</button>
+</div>
 
-  <script>
-    const botao = document.getElementById('botao');
-    const mensagem = document.getElementById('mensagem');
-    const imagem = document.getElementById('imagem');
-    const audio = document.getElementById('audio');
-    const body = document.body;
-    const container = document.getElementById('container');
+<audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
 
-    window.addEventListener("click", () => {
-      audio.play().catch(() => {});
-    });
+<script>
+  const botao = document.getElementById('botao');
+  const mensagem = document.getElementById('mensagem');
+  const imagem = document.getElementById('imagem');
+  const audio = document.getElementById('audio');
+  const body = document.body;
 
-    botao.addEventListener('click', () => {
-      alert("⚠️ Por favor, aumente o volume do seu dispositivo para uma melhor experiência!");
+  window.addEventListener("click", () => {
+    audio.play().catch(() => {});
+  });
 
-      mensagem.style.display = 'block';
-      imagem.style.display = 'block';
-      botao.style.display = 'none';
+  botao.addEventListener('click', () => {
+    alert("⚠️ Por favor, aumente o volume do seu dispositivo para uma melhor experiência!");
 
-      audio.volume = 1.0;
-      audio.play();
+    mensagem.style.display = 'block';
+    imagem.style.display = 'block';
+    botao.style.display = 'none';
 
-      if (navigator.vibrate) {
-        navigator.vibrate(4000);
+    audio.volume = 1.0;
+    audio.play();
+
+    if (navigator.vibrate) {
+      navigator.vibrate(4000);
+    }
+
+    body.classList.add('tremendo');
+
+    let ciclos = 0;
+    const maxCiclos = 27; // ~4s com 150ms intervalos
+
+    const flashInterval = setInterval(() => {
+      if (ciclos % 2 === 0) {
+        body.style.backgroundColor = 'white';
+        mensagem.style.color = 'black';
+        imagem.style.filter = 'brightness(8)';
+      } else {
+        body.style.backgroundColor = 'black';
+        mensagem.style.color = 'white';
+        imagem.style.filter = 'brightness(1)';
       }
-
-      body.classList.add('tremendo');
-
-      let ciclos = 0;
-      const maxCiclos = 27;
-
-      const flashInterval = setInterval(() => {
-        if (ciclos % 2 === 0) {
-          body.style.backgroundColor = 'white';
-          mensagem.style.color = 'black';
-          imagem.style.filter = 'brightness(8)';
-        } else {
-          body.style.backgroundColor = 'black';
-          mensagem.style.color = 'white';
-          imagem.style.filter = 'brightness(1)';
-        }
-        ciclos++;
-        if (ciclos >= maxCiclos) {
-          clearInterval(flashInterval);
-          body.style.backgroundColor = 'black';
-          mensagem.style.color = 'white';
-          imagem.style.filter = 'none';
-          body.classList.remove('tremendo');
-        }
-      }, 150);
-    });
-  </script>
+      ciclos++;
+      if (ciclos >= maxCiclos) {
+        clearInterval(flashInterval);
+        body.style.backgroundColor = 'black';
+        mensagem.style.color = 'white';
+        imagem.style.filter = 'none';
+        body.classList.remove('tremendo');
+      }
+    }, 150);
+  });
+</script>
 
 </body>
 </html>
