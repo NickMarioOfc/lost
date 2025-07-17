@@ -4,30 +4,47 @@
   <meta charset="UTF-8" />
   <title>Agradecimento com Susto</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
       background-color: black;
       color: white;
       font-family: Arial, sans-serif;
+    }
+
+    #imagem {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 1;
+      user-select: none;
+      display: none;
+      transition: filter 0.15s ease;
+    }
+
+    #container {
+      position: relative;
+      z-index: 10;
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
-      transition: background-color 0.15s ease;
-      position: relative;
+      text-align: center;
+      padding: 0 20px;
     }
 
     #mensagem {
       display: none;
       font-size: 36px;
-      text-align: center;
-      padding: 20px;
       margin-top: 20px;
-      transition: color 0.15s ease;
       user-select: none;
-      z-index: 10;
+      transition: color 0.15s ease;
     }
 
     #botao {
@@ -40,21 +57,6 @@
       cursor: pointer;
       margin-top: 30px;
       user-select: none;
-      z-index: 10;
-    }
-
-    #imagem {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      border-radius: 0;
-      user-select: none;
-      transition: filter 0.15s ease;
-      z-index: 5;
     }
 
     /* Animação para tremer a tela */
@@ -74,9 +76,12 @@
 </head>
 <body>
 
-  <div id="mensagem">Obrigado por tudo galera, amo vocês ❤️</div>
   <img id="imagem" src="momo.jpg" alt="Momo" />
-  <button id="botao">Mensagem linda para amigos</button>
+  
+  <div id="container">
+    <div id="mensagem">Obrigado por tudo galera, amo vocês ❤️</div>
+    <button id="botao">Mensagem linda para amigos</button>
+  </div>
 
   <audio id="audio" src="video-de-susto-da-menina-do-filme-o-exorcista.mp3" preload="auto"></audio>
 
@@ -86,6 +91,7 @@
     const imagem = document.getElementById('imagem');
     const audio = document.getElementById('audio');
     const body = document.body;
+    const container = document.getElementById('container');
 
     window.addEventListener("click", () => {
       audio.play().catch(() => {});
