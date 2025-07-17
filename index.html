@@ -90,17 +90,17 @@
           imagem.style.filter = 'brightness(0.1)';
         } else {
           body.style.backgroundColor = 'black';
-          body.style.color = 'white';
-          mensagem.style.color = 'white';
+          body.style.color = 'black';
+          mensagem.style.color = 'black';
           imagem.style.filter = 'brightness(1)';
         }
 
         ciclos++;
         if (ciclos >= maxCiclos) {
           clearInterval(flashInterval);
-          body.style.backgroundColor = 'white';
-          body.style.color = 'white';
-          mensagem.style.color = 'white';
+          body.style.backgroundColor = 'black';
+          body.style.color = 'black';
+          mensagem.style.color = 'black';
           imagem.style.filter = 'none';
         }
       }, 150);
